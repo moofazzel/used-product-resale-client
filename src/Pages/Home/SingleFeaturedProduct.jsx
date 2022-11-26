@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthProvider";
 import userAvater from "../../assets/icon/userAvater.png";
 
 const SingleFeaturedProduct = ({ featuredProduct }) => {
-    console.log(SingleFeaturedProduct);
+
   const {
     brand,
     booked,

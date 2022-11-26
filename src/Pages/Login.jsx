@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../context/AuthProvider";
 import { Result } from "postcss";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { loginWithEmailPassword, googleSignIn } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   // const [token] = useToken(loginUserEmail)
 
@@ -43,7 +45,12 @@ const Login = () => {
     googleSignIn()
       .then((result) => {
         const user = result.user;
-
+      
+        const accountType = "buyer";
+        if (user.uid) {
+          toast("Login Success")
+          saveUser(user.displayName, user.email, accountType);
+        }
         navigate(from, { replace: true });
       })
       .catch((error) => {
@@ -51,6 +58,22 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+      });
+  };
+
+  const saveUser = (name, email, accountType) => {
+    const user = { name, email, accountType: accountType };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // set email for custom hook useToken for check token
+        
       });
   };
 
@@ -140,8 +163,6 @@ const Login = () => {
               </label>
             </div>
 
-            
-
             <div>
               <button
                 type="submit"
@@ -153,7 +174,9 @@ const Login = () => {
             <div className="flex flex-col space-y-5">
               <span className="flex items-center justify-center space-x-2">
                 <span className="h-px bg-gray-400 w-14"></span>
-                <span className="font-normal text-gray-500">or login as a buyer</span>
+                <span className="font-normal text-gray-500">
+                  or login as a buyer
+                </span>
                 <span className="h-px bg-gray-400 w-14"></span>
               </span>
               <div className="flex flex-row items-center justify-center ">
@@ -170,7 +193,7 @@ const Login = () => {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    class="bi bi-google"
+                    className="bi bi-google"
                     viewBox="0 0 16 16"
                   >
                     <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
