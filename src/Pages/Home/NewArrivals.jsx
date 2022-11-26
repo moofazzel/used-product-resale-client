@@ -4,7 +4,7 @@ import Product from "./Product";
 const NewArrivals = () => {
   return (
     <>
-      <div className="container mx-auto px-20">
+      <div className="container mx-auto px-6 lg:px-20">
         {/* <!-- title --> */}
         <div className="p-5">
           <h1 className="font-bold text-lg">New Arrivals</h1>

@@ -8,12 +8,12 @@ import Navbar from "../Shared/Navbar/Navbar";
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const { isAdmin, userType } = useAdmin(user?.email);
-  console.log(userType);
+
   //   const [userType] = useCheckUserType(user?.email);
   return (
     <div>
       <Navbar></Navbar>
-      <div className="container mx-auto px-20">
+      <div className="container mx-auto px-6 lg:px-20">
         <div className="drawer drawer-mobile">
           <input
             id="dashboard-drawer"
@@ -46,6 +46,9 @@ const Dashboard = () => {
                   </li>
                   <li>
                     <Link to={"/dashboard/addDoctor"}>All Buyer</Link>
+                  </li>
+                  <li>
+                    <Link to={"/dashboard/addDoctor"}>Reported Items</Link>
                   </li>
                 </>
               )}

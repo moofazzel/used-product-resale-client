@@ -1,232 +1,316 @@
-import React from 'react';
+import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Addproduct = () => {
-    return (
-        <div>
-           
+  const { user } = useContext(AuthContext);
 
-    <div>
-      <form className="text-sm">
-        <div className="xt-row xt-row-x-6 xt-row-y-4">
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Input </label>
-            <input
-              type="text"
-              className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
-              aria-label="Input"
-              placeholder="Input"
-            />
-          </div>
+  const today = new Date().toLocaleDateString();
 
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Disabled </label>
-            <input
-              type="text"
-              className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
-              aria-label="Input"
-              placeholder="Input"
-              disabled
-            />
-          </div>
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> File </label>
-            <input
-              type="file"
-              className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
-              aria-label="File"
-            />
-          </div>
+  const navigate = useNavigate();
 
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Textarea </label>
-            <textarea
-              className="block w-full h-20 max-h-48 rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none resize-vertical"
-              aria-label="Textarea"
-              placeholder="Textarea"></textarea>
-          </div>
+  const imageHostKey = process.env.REACT_APP_imagebb_key;
 
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Select </label>
-            <select
-              className="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
-              aria-label="Select">
-              <option defaultValue="">Select an option</option>
-              <option>Test</option>
-              <option>Test</option>
-              <option>Test</option>
-            </select>
-          </div>
+  // add product submit handle
+  const handleAddProduct = (v) => {
 
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Select multiple </label>
-            <select
-              className="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
-              multiple
-              aria-label="Select multiple">
-              <option>Option 1</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-            </select>
-          </div>
+      
 
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Checkbox </label>
+    // console.log(imageHostKey);
 
-            <div className="xt-row xt-row-x-8 xt-row-y-2">
-              <div className="w-full">
-                <label className="cursor-pointer inline-flex items-baseline">
-                  <input
-                    type="checkbox"
-                    aria-label="Lorem ipsum"
-                    className="xt-check xt-checkbox rounded-md bg-gray-200 border border-transparent transition-all checked:bg-primary-500"
-                    defaultChecked
-                    disabled
-                  />
-                  <span className="ml-4">
-                    <strong>Lorem ipsum</strong> dolor sit amet, <a href="/">consectetur adipiscing</a> elit. Nullam
-                    suscipit, velit eu tristique mollis, dui felis dictum turpis, a auctor est odio ac diam. Sed mauris
-                    augue, sagittis vitae magna eget, vehicula scelerisque elit.
-                  </span>
-                </label>
-              </div>
+    const image = v.picture[0];
+    const formData = new FormData();
 
-              <div className="w-full">
-                <label className="cursor-pointer inline-flex items-baseline">
-                  <input
-                    type="checkbox"
-                    aria-label="Lorem ipsum"
-                    className="xt-check xt-checkbox rounded-md bg-gray-200 border border-transparent transition-all checked:bg-primary-500"
-                  />
-                  <span className="ml-4">
-                    <strong>Lorem ipsum</strong> dolor sit amet, <a href="/">consectetur adipiscing</a> elit. Nullam
-                    suscipit, velit eu tristique mollis, dui felis dictum turpis, a auctor est odio ac diam. Sed mauris
-                    augue, sagittis vitae magna eget, vehicula scelerisque elit.
-                  </span>
-                </label>
-              </div>
+    formData.append("image", image);
+    // const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    const url = `https://api.imgbb.com/1/upload?key=121434ed25072b618fb998af7dda3f59`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          const productDetails = {
+            brand: v.productName,
+            modal: v.Model,
+            buyingPrice: v.ProductPrice,
+            resellingPrice: v.sellingPrice,
+            category: v.category,
+            condition: v.condition,
+            description: v.description,
+            usedDuration: v.duration,
+            location: v.location,
+            img: imgData.data.picture,
+            postedDate: "today",
+            userName: "user.displayName",
+            userEmail: "user.email",
+            userImg: "user.photoURL",
+            booked: "",
+          };
+
+          // save doctor information to the database
+          fetch("http://localhost:5000/addProduct", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(productDetails),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              if (result.acknowledged) {
+                toast.success(`${v.name} is added successfully`);
+                navigate("/dashboard/products");
+              }
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("product image upload Error:", error);
+      });
+  };
+
+  return (
+    <>
+      <div className="lg:w-[70%] ">
+        <form onSubmit={handleSubmit(handleAddProduct)} className="text-sm">
+          <div className="xt-row xt-row-x-6 xt-row-y-4">
+            <div className="w-full">
+              <label className="block mb-3 font-medium text-gray-700">
+                Product brand
+              </label>
+              <input
+                type="text"
+                id="ProductName"
+                className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Input"
+                {...register("productName", {
+                  required: "Product Name is required",
+                })}
+              />
+
+              {errors.ProductName && (
+                <p className="text-red-600">{errors.ProductName?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Product Model
+              </label>
+              <input
+                type="text"
+                id="Model"
+                className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Input"
+                {...register("Model", {
+                  required: "Product Model is required",
+                })}
+              />
+
+              {errors.Model && (
+                <p className="text-red-600">{errors.Model?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Original Price
+              </label>
+              <input
+                type="number"
+                id="ProductPrice"
+                className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Input"
+                {...register("ProductPrice", {
+                  required: "Product Price is required",
+                })}
+              />
+
+              {errors.ProductPrice && (
+                <p className="text-red-600">{errors.ProductPrice?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Uses duration
+              </label>
+              <input
+                type="text"
+                id="duration"
+                className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Input"
+                {...register("duration", {
+                  required: "Product Price is required",
+                })}
+              />
+
+              {errors.duration && (
+                <p className="text-red-600">{errors.duration?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Reselling Price
+              </label>
+              <input
+                type="number"
+                id="sellingPrice"
+                className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Input"
+                {...register("sellingPrice", {
+                  required: "Product Price is required",
+                })}
+              />
+
+              {errors.sellingPrice && (
+                <p className="text-red-600">{errors.sellingPrice?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Uses duration
+              </label>
+              <input
+                type="text"
+                id="duration"
+                className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Input"
+                {...register("duration", {
+                  required: "Product Price is required",
+                })}
+              />
+
+              {errors.duration && (
+                <p className="text-red-600">{errors.duration?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full">
+              <label className="block mb-3 font-medium text-gray-700">
+                Select product picture
+              </label>
+              <input
+                type="file"
+                className="block w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="File"
+                {...register("picture", {
+                  required: "picture is required",
+                })}
+              />
+              {errors.picture && (
+                <p className="text-red-600">{errors.picture?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Product description
+              </label>
+              <textarea
+                placeholder="Write about your product"
+                className="block w-full h-20 max-h-48 rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none resize-vertical"
+                aria-label="Textarea"
+                {...register("description", {
+                  required: "Product description is required",
+                })}
+              ></textarea>
+              {errors.description && (
+                <p className="text-red-600">{errors.description?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Product Condition
+              </label>
+              <select
+                className="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Select"
+                {...register("condition", {
+                  required: "Product Price is required",
+                })}
+              >
+                <option defaultValue="">Select Condition</option>
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Fair</option>
+              </select>
+              {errors.condition && (
+                <p className="text-red-600">{errors.condition?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Select category
+              </label>
+              <select
+                className="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Select"
+                {...register("category", {
+                  required: "Product Price is required",
+                })}
+              >
+                <option defaultValue="">Select category</option>
+                <option>Windows</option>
+                <option>MacBook</option>
+                <option>Linux</option>
+              </select>
+              {errors.category && (
+                <p className="text-red-600">{errors.category?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-3">
+              <label className="block mb-3 font-medium text-gray-700">
+                Select location
+              </label>
+              <select
+                className="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                aria-label="Select"
+                {...register("location", {
+                  required: "Product Price is required",
+                })}
+              >
+                <option defaultValue="">Select your district</option>
+                <option>Khulna</option>
+                <option>Dhaka</option>
+                <option>Chittagong</option>
+                <option>Sylhet</option>
+                <option>Barisal</option>
+                <option>Rangpur</option>
+                <option>Mymensingh</option>
+              </select>
+              {errors.location && (
+                <p className="text-red-600">{errors.location?.message}</p>
+              )}
+            </div>
+
+            <div className="w-full my-8">
+              <button type="submit" className="btn btn-wide">
+                Submit
+              </button>
             </div>
           </div>
-
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Radio </label>
-
-            <div className="xt-row xt-row-x-8 xt-row-y-2">
-              <div className="w-full">
-                <label className="cursor-pointer inline-flex items-baseline">
-                  <input
-                    type="radio"
-                    aria-label="Lorem ipsum"
-                    className="xt-check xt-radio rounded-full bg-gray-200 border border-transparent transition-all checked:bg-primary-500"
-                    name="radio-usage"
-                    defaultChecked
-                  />
-                  <span className="ml-4">
-                    <strong>Lorem ipsum</strong> dolor sit amet, <a href="/">consectetur adipiscing</a> elit. Nullam
-                    suscipit, velit eu tristique mollis, dui felis dictum turpis, a auctor est odio ac diam. Sed mauris
-                    augue, sagittis vitae magna eget, vehicula scelerisque elit.
-                  </span>
-                </label>
-              </div>
-
-              <div className="w-full">
-                <label className="cursor-pointer inline-flex items-baseline">
-                  <input
-                    type="radio"
-                    aria-label="Lorem ipsum"
-                    className="xt-check xt-radio rounded-full bg-gray-200 border border-transparent transition-all checked:bg-primary-500"
-                    name="radio-usage"
-                  />
-                  <span className="ml-4">
-                    <strong>Lorem ipsum</strong> dolor sit amet, <a href="/">consectetur adipiscing</a> elit. Nullam
-                    suscipit, velit eu tristique mollis, dui felis dictum turpis, a auctor est odio ac diam. Sed mauris
-                    augue, sagittis vitae magna eget, vehicula scelerisque elit.
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full">
-            <label className="block mb-3 font-medium text-gray-700"> Switch </label>
-
-            <div className="xt-row xt-row-x-8 xt-row-y-2">
-              <div className="w-full">
-                <label className="cursor-pointer inline-flex items-baseline">
-                  <input
-                    type="checkbox"
-                    aria-label="Lorem ipsum"
-                    className="xt-check xt-switch rounded-full bg-gray-200 border border-transparent transition-all checked:bg-primary-500"
-                  />
-                  <span className="ml-4">
-                    <strong>Lorem ipsum</strong> dolor sit amet, <a href="/">consectetur adipiscing</a> elit. Nullam
-                    suscipit, velit eu tristique mollis, dui felis dictum turpis, a auctor est odio ac diam. Sed mauris
-                    augue, sagittis vitae magna eget, vehicula scelerisque elit.
-                  </span>
-                </label>
-              </div>
-
-              <div className="w-full">
-                <label className="cursor-pointer inline-flex items-baseline">
-                  <input
-                    type="radio"
-                    aria-label="Lorem ipsum"
-                    className="xt-check xt-switch rounded-full bg-gray-200 border border-transparent transition-all checked:bg-primary-500"
-                    name="switch-usage"
-                    defaultChecked
-                  />
-                  <span className="ml-4">
-                    <strong>Lorem ipsum</strong> dolor sit amet, <a href="/">consectetur adipiscing</a> elit. Nullam
-                    suscipit, velit eu tristique mollis, dui felis dictum turpis, a auctor est odio ac diam. Sed mauris
-                    augue, sagittis vitae magna eget, vehicula scelerisque elit.
-                  </span>
-                </label>
-              </div>
-
-              <div className="w-full">
-                <label className="cursor-pointer inline-flex items-baseline">
-                  <input
-                    type="radio"
-                    aria-label="Lorem ipsum"
-                    className="xt-check xt-switch rounded-full bg-gray-200 border border-transparent transition-all checked:bg-primary-500"
-                    name="switch-usage"
-                  />
-                  <span className="ml-4">
-                    <strong>Lorem ipsum</strong> dolor sit amet, <a href="/">consectetur adipiscing</a> elit. Nullam
-                    suscipit, velit eu tristique mollis, dui felis dictum turpis, a auctor est odio ac diam. Sed mauris
-                    augue, sagittis vitae magna eget, vehicula scelerisque elit.
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full">
-            <button
-              type="submit"
-              className="xt-button py-2.5 px-3.5 text-sm rounded-md font-medium leading-snug tracking-wider uppercase text-white bg-primary-500 transition hover:text-white hover:bg-primary-600 active:text-white active:bg-primary-700 on:text-white on:bg-primary-600">
-              submit
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-    );
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default Addproduct;

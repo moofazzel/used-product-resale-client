@@ -7,16 +7,14 @@ import SingleFeaturedProduct from "./SingleFeaturedProduct";
 const FeturedProduct = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
-
   useEffect(() => {
     fetch("http://localhost:5000/featuredProduct")
       .then((res) => res.json())
       .then((data) => setFeaturedProducts(data));
   }, []);
 
-
   return (
-    <div className="container mx-auto px-20">
+    <div className="container mx-auto px-6 lg:px-20">
       {/* <!-- title --> */}
       <div className="p-5">
         <h1 className="font-bold text-4xl mb-4">Featured Products</h1>
