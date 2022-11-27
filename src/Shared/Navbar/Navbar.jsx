@@ -6,6 +6,7 @@ const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const { user, logOut } = useContext(AuthContext);
 
+
   const handleLogOut = () => {
     logOut()
       .then(() => {})

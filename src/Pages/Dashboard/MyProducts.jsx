@@ -1,21 +1,54 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import DeleteConfirmModal from "../../Components/DeleteConfirmModal/DeleteConfirmModal";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import { AuthContext } from "../../context/AuthProvider";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
 
-  const { data: myProducts } = useQuery({
+  const [deleteProduct, setDeleteProduct] = useState(null);
+
+  const {
+    data: myProducts = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["myProduct"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/myProduct?email=${user.email}`
+        `http://localhost:5000/myProduct?email=${user?.email}`
       );
       const data = await res.json();
       return data;
     },
   });
+
+;
+
+  //  button for delete doctor
+  const handleDeleteProduct = (product) => {
+    console.log(product);
+    fetch(`http://localhost:5000/product/${product._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount) {
+          refetch();
+          toast.success(`Product "${product.modal}" deleted Successfully`);
+        }
+      });
+  };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
@@ -24,7 +57,7 @@ const MyProducts = () => {
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 px-5 ">
           <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div class="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
-              <table class="w-full overflow-x-scroll divide-y divide-gray-200">
+              <table class="w-full overflow-x-scroll divide-y divide-gray-200 ">
                 <thead class="bg-gray-50">
                   <tr>
                     <th
@@ -51,8 +84,11 @@ const MyProducts = () => {
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  {myProducts.map((p) => (
-                    <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
+                  {myProducts.map((p, i) => (
+                    <tr
+                      key={i}
+                      class="transition-all hover:bg-gray-100 hover:shadow-lg"
+                    >
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                           <div class="flex-shrink-0 w-36 h-36">
@@ -77,19 +113,26 @@ const MyProducts = () => {
                         </span>
                       </td>
                       <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <div className="dropdown dropdown-end">
+                        <div className="dropdown dropdown-top dropdown-end">
                           <label tabIndex={0} className="btn btn-sm m-1">
                             Edit
                           </label>
                           <ul
                             tabIndex={0}
-                            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                            className="dropdown-content menu p-2 shadow-2xl bg-base-200 rounded-md w-52"
                           >
                             <li>
-                              <Link>Item 1</Link>
+                              <Link>Update</Link>
                             </li>
                             <li>
-                              <Link>Item 2</Link>
+                              {/* The button to open modal */}
+                              <label
+                                onClick={() => setDeleteProduct(p)}
+                                htmlFor="confirm-delete"
+                                className="hover:bg-red-200"
+                              >
+                                Delete
+                              </label>
                             </li>
                           </ul>
                         </div>
@@ -102,6 +145,12 @@ const MyProducts = () => {
           </div>
         </div>
       </div>
+      {deleteProduct && (
+        <DeleteConfirmModal
+          handleDeleteProduct={handleDeleteProduct}
+          deleteProduct={deleteProduct}
+        />
+      )}
     </>
   );
 };
