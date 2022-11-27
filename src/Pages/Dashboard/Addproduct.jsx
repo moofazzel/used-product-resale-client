@@ -21,9 +21,6 @@ const Addproduct = () => {
 
   // add product submit handle
   const handleAddProduct = (v) => {
-
-      
-
     // console.log(imageHostKey);
 
     const image = v.picture[0];
@@ -38,6 +35,7 @@ const Addproduct = () => {
     })
       .then((res) => res.json())
       .then((imgData) => {
+        console.log(imgData);
         if (imgData.success) {
           const productDetails = {
             brand: v.productName,
@@ -49,11 +47,11 @@ const Addproduct = () => {
             description: v.description,
             usedDuration: v.duration,
             location: v.location,
-            img: imgData.data.picture,
-            postedDate: "today",
-            userName: "user.displayName",
-            userEmail: "user.email",
-            userImg: "user.photoURL",
+            img: imgData.data.display_url,
+            postedDate: today,
+            userName: user.displayName,
+            userEmail: user.email,
+            userImg: user.photoURL,
             booked: "",
           };
 
@@ -71,7 +69,13 @@ const Addproduct = () => {
               console.log(result);
               if (result.acknowledged) {
                 toast.success(`${v.name} is added successfully`);
-                navigate("/dashboard/products");
+              }
+              if (v.category === "MacBook") {
+                navigate("/products/MacBook");
+              } else if (v.category === "Windows") {
+                navigate("/products/Windows");
+              } else {
+                navigate("/products/Linux");
               }
             });
         }
@@ -143,7 +147,7 @@ const Addproduct = () => {
               )}
             </div>
 
-            <div className="w-full my-3">
+            {/* <div className="w-full my-3">
               <label className="block mb-3 font-medium text-gray-700">
                 Uses duration
               </label>
@@ -160,7 +164,7 @@ const Addproduct = () => {
               {errors.duration && (
                 <p className="text-red-600">{errors.duration?.message}</p>
               )}
-            </div>
+            </div> */}
 
             <div className="w-full my-3">
               <label className="block mb-3 font-medium text-gray-700">

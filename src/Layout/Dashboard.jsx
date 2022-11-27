@@ -30,9 +30,14 @@ const Dashboard = () => {
             ></label>
             <ul className="menu p-4 w-60 bg-base-100 text-base-content">
               {userType === "seller" && (
-                <li>
-                  <Link to={"/dashboard/addProduct"}>Add Product</Link>
-                </li>
+                <>
+                  <li>
+                    <Link to={"/dashboard/addProduct"}>Add Product</Link>
+                  </li>
+                  <li>
+                    <Link to={"/dashboard/myProduct"}>My Product</Link>
+                  </li>
+                </>
               )}
               {userType === "buyer" && (
                 <li>

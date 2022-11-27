@@ -2,8 +2,16 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import userAvater from "../../assets/icon/userAvater.png";
+import useAdmin from "../../hooks/UseAdmin";
 
-const Product = ({ product,setProductData }) => {
+const Product = ({ product, setProductData }) => {
+
+  const { user } = useContext(AuthContext);
+
+  const {userRole} = useAdmin(product.userEmail)
+  // console.log(product.userEmail);
+  console.log(userRole);
+
   const {
     brand,
     booked,
@@ -17,16 +25,17 @@ const Product = ({ product,setProductData }) => {
     description,
     userName,
   } = product;
-  const { user } = useContext(AuthContext);
 
   return (
     <>
       <div className="w-72 bg-white shadow-md rounded-sm duration-500 hover:scale-105 hover:shadow-xl">
-        <img
-          src={img}
-          alt="Product"
-          className="h-80 w-72 object-cover rounded-t-sm"
-        />
+        <div className="h-60 w-72">
+          <img
+            src={img}
+            alt="Product"
+            className="w-full object-cover rounded-t-sm"
+          />
+        </div>
         <div className="px-4 py-3 w-72">
           <div className="flex justify-between">
             <span className="text-gray-400 mr-3 uppercase text-xs">
@@ -51,20 +60,22 @@ const Product = ({ product,setProductData }) => {
             />
             <div className="flex items-center gap-1">
               {userName}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="green"
-                className="w-5 h-5 "
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
-                />
-              </svg>
+              {userRole === "verified" &&
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="green"
+                  className="w-5 h-5 "
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+                  />
+                </svg>
+              }
             </div>
 
             {/* <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span> */}
@@ -89,7 +100,11 @@ const Product = ({ product,setProductData }) => {
                 <>
                   {/* <button className="btn btn-sm ">Buy Now</button> */}
                   {/* The button to open modal */}
-                  <label onClick={()=> setProductData(product)} htmlFor="my-modal" className="btn">
+                  <label
+                    onClick={() => setProductData(product)}
+                    htmlFor="my-modal"
+                    className="btn"
+                  >
                     Book Now
                   </label>
                   <input

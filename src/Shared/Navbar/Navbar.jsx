@@ -21,23 +21,21 @@ const Navbar = () => {
       .then((data) => setCategories(data));
   }, []);
 
-  console.log(categories);
-
   const menuItems = (
     <>
       <>
         <li className="dropdown dropdown-hover">
           <label tabIndex={0} className="m-1">
-            Hover
+            Categories
           </label>
           <ul
             tabIndex={0}
             className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52"
           >
-            {categories.map((c,i) => (
+            {categories.map((c, i) => (
               <>
                 <li key={i}>
-                <Link to={`/products/${c.category_name}`}>{c.name}</Link>
+                  <Link to={`/products/${c.category_name}`}>{c.name}</Link>
                 </li>
               </>
             ))}

@@ -3,6 +3,7 @@ import Dashboard from "../Layout/Dashboard";
 import Main from "../Layout/Main";
 import Addproduct from "../Pages/Dashboard/Addproduct";
 import MyOrders from "../Pages/Dashboard/MyOrders";
+import MyProducts from "../Pages/Dashboard/MyProducts";
 import Home from "../Pages/Home/Home";
 import Product from "../Pages/Home/Product";
 import Login from "../Pages/Login";
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/addProduct",
         element: <Addproduct />,
+      },
+      {
+        path: "/dashboard/myProduct",
+        element: <MyProducts />,
       },
     ],
   },
