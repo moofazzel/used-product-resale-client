@@ -6,7 +6,6 @@ const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const { user, logOut } = useContext(AuthContext);
 
-
   const handleLogOut = () => {
     logOut()
       .then(() => {})
@@ -33,12 +32,10 @@ const Navbar = () => {
             tabIndex={0}
             className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52"
           >
-            {categories.map((c, i) => (
-              <>
-                <li key={i}>
-                  <Link to={`/products/${c.category_name}`}>{c.name}</Link>
-                </li>
-              </>
+            {categories.map((c) => (
+              <li key={c._id}>
+                <Link to={`/products/${c.category_name}`}>{c.name}</Link>
+              </li>
             ))}
           </ul>
         </li>
@@ -125,8 +122,8 @@ const Navbar = () => {
               {menuItems}
             </ul>
           </div>
-          <Link to={"/"} className="btn btn-ghost normal-case text-xl">
-            Doctor Portal
+          <Link to={"/"} className="font-bold text-3xl normal-case">
+            Vendor
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
