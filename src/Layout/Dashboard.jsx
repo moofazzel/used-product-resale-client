@@ -47,13 +47,13 @@ const Dashboard = () => {
               {isAdmin && (
                 <>
                   <li>
-                    <Link to={"/dashboard/allusers"}>All Seller</Link>
+                    <Link to={"/dashboard/allSeller"}>All Seller</Link>
                   </li>
                   <li>
-                    <Link to={"/dashboard/addDoctor"}>All Buyer</Link>
+                    <Link to={"/dashboard/allbuyers"}>All Buyer</Link>
                   </li>
                   <li>
-                    <Link to={"/dashboard/addDoctor"}>Reported Items</Link>
+                    <Link to={"/dashboard/"}>Reported Items</Link>
                   </li>
                 </>
               )}

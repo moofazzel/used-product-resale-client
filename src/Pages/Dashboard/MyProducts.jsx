@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+
 import DeleteConfirmModal from "../../Components/DeleteConfirmModal/DeleteConfirmModal";
 import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import { AuthContext } from "../../context/AuthProvider";
@@ -28,7 +29,7 @@ const MyProducts = () => {
     },
   });
 
-  console.log(myProducts);
+
 
   //  button for delete doctor
   const handleDeleteProduct = (product) => {
@@ -48,7 +49,21 @@ const MyProducts = () => {
       });
   };
 
-  const handleUpdate = () => {};
+  const handleUpdate = (id) => {
+    fetch(`http://localhost:5000/product/advertise/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.acknowledged) {
+          toast('Your Product is now in advertising');
+        }
+        refetch()
+      });
+  };
 
   if (isLoading || loading) {
     return <LoadingSpinner />;
@@ -90,8 +105,8 @@ const MyProducts = () => {
               className="transition-all hover:bg-gray-100 hover:shadow-lg"
             >
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 w-36 h-36">
+                <div className="">
+                  <div className="flex items-center w-36 h-36">
                     <img className="  rounded-md" src={p?.img} alt="" />
                   </div>
                 </div>
@@ -99,6 +114,9 @@ const MyProducts = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">Title: {p?.brand}</div>
                 <div className="text-sm text-gray-500">Model: {p?.modal}</div>
+                <div className="text-sm text-gray-500">
+                ResellingPrice: {p?.resellingPrice}
+                </div>
                 <div className="text-sm text-gray-500">
                   Product ID: {p?._id}
                 </div>
@@ -128,10 +146,10 @@ const MyProducts = () => {
                       </label>
                     </li>
                     <li>
-                      <Link onClick={handleUpdate}>Update</Link>
+                      <Link onClick={handleUpdate} className="hover:bg-green-200">Update</Link>
                     </li>
                     <li>
-                      <Link onClick={handleUpdate}>Make Add</Link>
+                      <Link onClick={()=>handleUpdate(p._id)} className="hover:bg-fuchsia-200">Make Add</Link>
                     </li>
                   </ul>
                 </div>
@@ -146,6 +164,7 @@ const MyProducts = () => {
           deleteProduct={deleteProduct}
         />
       )}
+      <ToastContainer />
     </>
   );
 };
