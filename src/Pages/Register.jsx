@@ -28,7 +28,6 @@ const Register = () => {
           photoURL: data.url,
         };
         UpdateNamePhotoURL(profile);
-        console.log(user);
 
         if (user.uid) {
           saveUser(data.name, data.email, data.accountType);
@@ -41,28 +40,6 @@ const Register = () => {
       });
   };
 
-  // TODO: Google sign in pass data to mongo db
-
-  // google login
-  const handleGoogleLogin = () => {
-    LoginGoogle()
-      .then((result) => {
-        const user = result.user;
-        const accountType = "buyer";
-
-        if (user.uid) {
-          saveUser(user.displayName, user.email, accountType);
-        }
-
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-  };
 
   const saveUser = (name, email, accountType) => {
     const user = { name, email, accountType: accountType };
@@ -76,7 +53,8 @@ const Register = () => {
       .then((res) => res.json())
       .then((data) => {
         // set email for custom hook useToken for check token
-        console.log("saveUser data", data);
+        // console.log("saveUser data", data);
+        navigate(from, { replace: true });
       });
   };
 

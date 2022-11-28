@@ -36,22 +36,21 @@ const MyOrders = () => {
                 <thead className="bg-gray-50">
                   <tr>
                     <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      className="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase"
                     >
                       Image
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
-                    >
+                      className="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase"
+                >
                       Title/Model/ID
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      className="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase"
                     >
-                      Price
+                      Price/Taka
                     </th>
                     <th scope="col" className="relative px-6 py-3">
                       <span className="sr-only">Edit</span>
@@ -75,23 +74,23 @@ const MyOrders = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 font-semibold whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          Title: {order?.brand}
+                          Title: {order?.product_title}
                         </div>
                         <div className="text-sm text-gray-500">
-                          Model: {order?.modal}
+                          Model: {order?.product_model}
                         </div>
                         <div className="text-sm text-gray-500">
                           Product ID: {order?._id}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex py-2 px-4 text-md font-semibold leading-5 text-green-800 bg-blue-400-100 rounded-full">
-                          {order.price}
+                        <span className="inline-flex py-2 text-md font-semibold leading-5 text-green-800 bg-blue-400-100 rounded-full">
+                          {order.price} 
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                      <td className="px-6 py-4 text-sm text-right whitespace-nowrap">
                         <div className="dropdown dropdown-top dropdown-end">
                           <label
                             tabIndex={0}

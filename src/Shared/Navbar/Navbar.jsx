@@ -32,8 +32,6 @@ const Navbar = () => {
             tabIndex={0}
             className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52"
           >
-            {/* FIXME: */}
-
             {categories.map((c) => (
               <li key={c._id}>
                 <Link to={`/products/${c.category_name}`}>{c.name}</Link>
@@ -51,7 +49,7 @@ const Navbar = () => {
       <div className="flex items-center gap-2">
         {user?.uid ? (
           <>
-            <div className="dropdown dropdown-end">
+            <div className="dropdown dropdown-hover dropdown-end rounded-md">
               <label tabIndex={0} className=" m-1">
                 <div className="avatar online">
                   <div className="w-14 rounded-full">
@@ -61,7 +59,7 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg w-52"
               >
                 <li>
                   <Link>Item 1</Link>
