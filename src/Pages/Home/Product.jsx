@@ -35,8 +35,6 @@ const Product = ({ product, setProductData }) => {
       .then((data) => setBooking(data));
   }, [_id, user?.email]);
 
-  console.log(booking?.booked);
-
   return (
     <>
       <div className="w-72 bg-white shadow-md rounded-sm duration-500 hover:scale-105 hover:shadow-xl">

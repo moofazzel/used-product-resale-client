@@ -42,7 +42,9 @@ const BookingModal = ({ productData, setProductData, setSuccessToast }) => {
       phone: data.phone,
       location: data.location,
       booked: "yes",
+      price: data.price,
     };
+    console.log(orders);
     // insert orders to orders collection
     fetch(`http://localhost:5000/orders`, {
       method: "POST",
@@ -120,12 +122,13 @@ const BookingModal = ({ productData, setProductData, setSuccessToast }) => {
             <input
               required
               id="resellingPrice"
-              defaultValue={`Price: ${resellingPrice}`}
-              disabled
+              defaultValue={resellingPrice}
+              
               name="resellingPrice"
-              type="resellingPrice"
+              type=""
               placeholder="Your Email"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full cursor select-none"
+              {...register("price", { required: true })}
             />
 
             <input

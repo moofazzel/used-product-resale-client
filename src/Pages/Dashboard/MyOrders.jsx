@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
@@ -23,7 +24,6 @@ const MyOrders = () => {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-
 
   return (
     <>
@@ -51,7 +51,7 @@ const MyOrders = () => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                     >
-                      Status
+                      Price
                     </th>
                     <th scope="col" className="relative px-6 py-3">
                       <span className="sr-only">Edit</span>
@@ -59,57 +59,50 @@ const MyOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {myProducts.map((p, i) => (
+                  {orders.map((order, i) => (
                     <tr
                       key={i}
                       className="transition-all hover:bg-gray-100 hover:shadow-lg"
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 w-36 h-36">
-                            <img className="  rounded-md" src={p?.img} alt="" />
+                          <div className="w-36 h-36flex items-center">
+                            <img
+                              className="w-full rounded-md m-auto"
+                              src={order?.product_image}
+                              alt=""
+                            />
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          Title: {p?.brand}
+                          Title: {order?.brand}
                         </div>
                         <div className="text-sm text-gray-500">
-                          Model: {p?.modal}
+                          Model: {order?.modal}
                         </div>
                         <div className="text-sm text-gray-500">
-                          Product ID: {p?._id}
+                          Product ID: {order?._id}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                          Unsold
+                        <span className="inline-flex py-2 px-4 text-md font-semibold leading-5 text-green-800 bg-blue-400-100 rounded-full">
+                          {order.price}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                         <div className="dropdown dropdown-top dropdown-end">
-                          <label tabIndex={0} className="btn btn-sm m-1">
-                            Edit
+                          <label
+                            tabIndex={0}
+                            className="btn bg-green-400 hover:bg-green-500 m-1 text-black border-0"
+                          >
+                            Buy
                           </label>
                           <ul
                             tabIndex={0}
                             className="dropdown-content menu p-2 shadow-2xl bg-base-200 rounded-md w-52"
-                          >
-                            <li>
-                              <Link onClick={handleUpdate}>Update</Link>
-                            </li>
-                            <li>
-                              {/* The button to open modal */}
-                              <label
-                                onClick={() => setDeleteProduct(p)}
-                                htmlFor="confirm-delete"
-                                className="hover:bg-red-200"
-                              >
-                                Delete
-                              </label>
-                            </li>
-                          </ul>
+                          ></ul>
                         </div>
                       </td>
                     </tr>
@@ -120,12 +113,6 @@ const MyOrders = () => {
           </div>
         </div>
       </div>
-      {/* {deleteProduct && (
-        <DeleteConfirmModal
-          handleDeleteProduct={handleDeleteProduct}
-          deleteProduct={deleteProduct} */}
-        />
-      )}
     </>
   );
 };

@@ -41,7 +41,7 @@ const Dashboard = () => {
               )}
               {userType === "buyer" && (
                 <li>
-                  <Link to={"/dashboard"}>My orders</Link>
+                  <Link to={"/dashboard/myOrders"}>My orders</Link>
                 </li>
               )}
               {isAdmin && (
