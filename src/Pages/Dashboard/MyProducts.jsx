@@ -1,6 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import DeleteConfirmModal from "../../Components/DeleteConfirmModal/DeleteConfirmModal";
 import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
@@ -39,10 +38,12 @@ const MyProducts = () => {
       .then((data) => {
         if (data.deletedCount) {
           refetch();
-          toast.success(`Product "${product.modal}" deleted Successfully`);
+          // toast.success(`Product "${product.modal}" deleted Successfully`);
         }
       });
   };
+
+  const handleUpdate = () => {};
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -120,7 +121,7 @@ const MyProducts = () => {
                             className="dropdown-content menu p-2 shadow-2xl bg-base-200 rounded-md w-52"
                           >
                             <li>
-                              <Link>Update</Link>
+                              <Link onClick={handleUpdate}>Update</Link>
                             </li>
                             <li>
                               {/* The button to open modal */}

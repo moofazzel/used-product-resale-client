@@ -4,7 +4,7 @@ import Loading from "../../assets/lotties/Loading.json";
 
 export default function LoadingSpinner() {
   return (
-    <div key="avatar_animation" className="animation w-44 mx-auto">
+    <div key="avatar_animation" className="animation w-64 mx-auto">
       <Lottie animationData={Loading} loop={true} />
     </div>
   );

@@ -1,8 +1,14 @@
 import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../context/AuthProvider";
 
-const BookingModal = ({ handleBooking, productData, setProductData }) => {
+const BookingModal = ({ productData, setProductData, setSuccessToast }) => {
+  const navigate = useNavigate();
+
   const {
+    _id,
     brand,
     booked,
     usedDuration,
@@ -17,13 +23,66 @@ const BookingModal = ({ handleBooking, productData, setProductData }) => {
   } = productData;
 
   const { user } = useContext(AuthContext);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const handleBooking = (data) => {
+    const orders = {
+      product_id: _id,
+      product_image: img,
+      product_title: brand,
+      product_model: modal,
+      email: user.email,
+      name: user.displayName,
+      phone: data.phone,
+      location: data.location,
+      booked: "yes",
+    };
+    // insert orders to orders collection
+    fetch(`http://localhost:5000/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(orders),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          setSuccessToast(toast("Booking confirm"));
+          setProductData(null);
+          navigate("/dashboard/myOrders");
+          return;
+        } else {
+          setSuccessToast(toast("Something wrong"));
+        }
+      });
+  };
+
   return (
     <>
       {/* Put this part before </body> tag */}
       <input type="checkbox" id="my-modal" className="modal-toggle" />
+
       <div className="modal">
-        <div className="modal-box">
-          <form onSubmit={handleBooking} className="grid gap-3 py-5">
+        <div className="modal-box relative">
+          <label
+            htmlFor="my-modal"
+            className="btn btn-sm btn-circle absolute right-4 top-4"
+          >
+            ✕
+          </label>
+
+          <form
+            onSubmit={handleSubmit(handleBooking)}
+            className="grid gap-3 py-5"
+          >
             <h3 className="text-xl font-semibold mb-3">Please fill the form</h3>
             <div className="divider m-0"></div>
             <input
@@ -71,11 +130,12 @@ const BookingModal = ({ handleBooking, productData, setProductData }) => {
 
             <input
               required
-              id="phone"
-              name="phone"
+              id="location"
+              name="location"
               type="text"
               placeholder="Enter your desire location"
               className="input input-bordered w-full"
+              {...register("location", { required: true })}
             />
 
             <input
@@ -85,22 +145,18 @@ const BookingModal = ({ handleBooking, productData, setProductData }) => {
               type="phone"
               placeholder="Phone Number"
               className="input input-bordered w-full"
+              {...register("phone", { required: true })}
             />
 
-            <input
+            <button
               type="submit"
-              value={"Submit"}
               className="btn input input-bordered mt-5 w-full bg-slate-700 text-white"
-            //   onClick={setProductData(null)}
-            />
-
-            {/* <div className="modal-action">
-              <label htmlFor="my-modal" className="btn">
-                Submit
-              </label>
-            </div> */}
+            >
+              Book
+            </button>
           </form>
         </div>
+        <ToastContainer />
       </div>
     </>
   );

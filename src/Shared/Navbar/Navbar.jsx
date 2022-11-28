@@ -32,6 +32,8 @@ const Navbar = () => {
             tabIndex={0}
             className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52"
           >
+            {/* FIXME: */}
+
             {categories.map((c) => (
               <li key={c._id}>
                 <Link to={`/products/${c.category_name}`}>{c.name}</Link>

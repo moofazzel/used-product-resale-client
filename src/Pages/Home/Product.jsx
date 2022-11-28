@@ -1,18 +1,18 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import userAvater from "../../assets/icon/userAvater.png";
 import useAdmin from "../../hooks/UseAdmin";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
+import { useQuery } from "@tanstack/react-query";
+import { async } from "@firebase/util";
 
 const Product = ({ product, setProductData }) => {
-
   const { user } = useContext(AuthContext);
 
-  const {userRole} = useAdmin(product.userEmail)
-  // console.log(product.userEmail);
-  console.log(userRole);
+  const { userRole } = useAdmin(product.userEmail);
 
   const {
+    _id,
     brand,
     booked,
     usedDuration,
@@ -25,6 +25,17 @@ const Product = ({ product, setProductData }) => {
     description,
     userName,
   } = product;
+
+  // state for booked button change dynamicaly
+  const [booking, setBooking] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/orders?email=${user?.email}&&id=${_id}`)
+      .then((res) => res.json())
+      .then((data) => setBooking(data));
+  }, [_id, user?.email]);
+
+  console.log(booking?.booked);
 
   return (
     <>
@@ -60,7 +71,7 @@ const Product = ({ product, setProductData }) => {
             />
             <div className="flex items-center gap-1">
               {userName}
-              {userRole === "verified" &&
+              {userRole === "verified" && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -75,7 +86,7 @@ const Product = ({ product, setProductData }) => {
                     d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
                   />
                 </svg>
-              }
+              )}
             </div>
 
             {/* <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span> */}
@@ -90,7 +101,7 @@ const Product = ({ product, setProductData }) => {
               </p>
             </del>
             <div className="ml-auto">
-              {booked.length > 0 ? (
+              {booking?.booked ? (
                 <>
                   <button disabled className="btn btn-sm ">
                     Booked

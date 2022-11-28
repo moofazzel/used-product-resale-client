@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../context/AuthProvider";
-import { Result } from "postcss";
 import { toast } from "react-toastify";
 
 const Login = () => {

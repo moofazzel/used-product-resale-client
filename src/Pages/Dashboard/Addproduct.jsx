@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Addproduct = () => {
@@ -68,7 +68,8 @@ const Addproduct = () => {
             .then((result) => {
               console.log(result);
               if (result.acknowledged) {
-                toast.success(`${v.name} is added successfully`);
+                // toast.success(`${v.name} is added successfully`);
+                toast(`${v.name} is added successfully`);
               }
               if (v.category === "MacBook") {
                 navigate("/products/MacBook");
