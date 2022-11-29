@@ -39,10 +39,9 @@ const Register = () => {
       });
   };
 
-
   const saveUser = (name, email, accountType, img) => {
     const user = { name, email, accountType: accountType, user_img: img };
-    fetch("http://localhost:5000/users", {
+    fetch("https://used-procuct.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -189,7 +188,6 @@ const Register = () => {
                 Register
               </button>
             </div>
-          
           </form>
         </div>
       </div>

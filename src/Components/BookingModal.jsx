@@ -46,7 +46,7 @@ const BookingModal = ({ productData, setProductData, setSuccessToast }) => {
     };
     console.log(orders);
     // insert orders to orders collection
-    fetch(`http://localhost:5000/orders`, {
+    fetch(`https://used-procuct.vercel.app/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +123,6 @@ const BookingModal = ({ productData, setProductData, setSuccessToast }) => {
               required
               id="resellingPrice"
               defaultValue={resellingPrice}
-              
               name="resellingPrice"
               type=""
               placeholder="Your Email"

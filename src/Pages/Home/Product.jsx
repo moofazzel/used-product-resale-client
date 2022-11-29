@@ -22,6 +22,7 @@ const Product = ({ product, setProductData }) => {
     modal,
     location,
     img,
+    userImg,
     description,
     userName,
   } = product;
@@ -30,7 +31,9 @@ const Product = ({ product, setProductData }) => {
   const [booking, setBooking] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}&id=${_id}`)
+    fetch(
+      `https://used-procuct.vercel.app/orders?email=${user?.email}&id=${_id}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setBooking(data);
@@ -41,7 +44,7 @@ const Product = ({ product, setProductData }) => {
   const [userType, setUserType] = useState(null);
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/user/${user?.email}`)
+      fetch(`https://used-procuct.vercel.app/user/${user?.email}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -86,11 +89,7 @@ const Product = ({ product, setProductData }) => {
             </p>
           </div>
           <div className="relative flex items-center gap-2">
-            <img
-              className="w-10 h-10 rounded-full"
-              src={user?.photoURL || userAvater}
-              alt=""
-            />
+            <img className="w-10 h-10 rounded-full" src={userImg} alt="" />
             <div className="flex items-center gap-1">
               {userName}
               {userRole === "verified" && (

@@ -14,7 +14,9 @@ const Allseller = () => {
   } = useQuery({
     queryKey: ["Allseller"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/allSeller/seller`);
+      const res = await fetch(
+        `https://used-procuct.vercel.app/allSeller/seller`
+      );
       const data = await res.json();
       console.log(data);
       return data;
@@ -22,7 +24,7 @@ const Allseller = () => {
   });
 
   const handleDeleteUser = (seller) => {
-    fetch(`http://localhost:5000/user/${seller?._id}`, {
+    fetch(`https://used-procuct.vercel.app/user/${seller?._id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -40,7 +42,7 @@ const Allseller = () => {
   };
   const handleVerified = (id) => {
     console.log(id);
-    fetch(`http://localhost:5000/user/verify/${id}`, {
+    fetch(`https://used-procuct.vercel.app/user/verify/${id}`, {
       method: "PUT",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,

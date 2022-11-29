@@ -13,7 +13,7 @@ const MyOrders = () => {
   } = useQuery({
     queryKey: ["myProduct"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/my_orders`);
+      const res = await fetch(`https://used-procuct.vercel.app/my_orders`);
       const data = await res.json();
       console.log(data);
 
@@ -35,15 +35,13 @@ const MyOrders = () => {
               <table className="w-full overflow-x-scroll divide-y divide-gray-200 ">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th
-                      className="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase"
-                    >
+                    <th className="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase">
                       Image
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-sm tracking-wider text-left text-gray-500 uppercase"
-                >
+                    >
                       Title/Model/ID
                     </th>
                     <th
@@ -87,7 +85,7 @@ const MyOrders = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="inline-flex py-2 text-md font-semibold leading-5 text-green-800 bg-blue-400-100 rounded-full">
-                          {order.price} 
+                          {order.price}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-right whitespace-nowrap">

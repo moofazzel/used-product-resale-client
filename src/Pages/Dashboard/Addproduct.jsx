@@ -56,7 +56,7 @@ const Addproduct = () => {
           };
 
           // save product information to the database
-          fetch("http://localhost:5000/addProduct", {
+          fetch("https://used-procuct.vercel.app/addProduct", {
             method: "POST",
             headers: {
               "content-type": "application/json",

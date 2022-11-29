@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../Layout/Dashboard";
 import Main from "../Layout/Main";
+import Blog from "../Pages/Blog";
 import Addproduct from "../Pages/Dashboard/Addproduct";
 import Allbuyers from "../Pages/Dashboard/Allbuyers";
 import Allseller from "../Pages/Dashboard/Allseller";
@@ -29,13 +30,17 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
         path: "/register",
         element: <Register />,
       },
       {
         path: "/products/:name",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.name}`),
+          fetch(`https://used-procuct.vercel.app/categories/${params.name}`),
         element: <Products />,
       },
     ],

@@ -17,7 +17,7 @@ const Products = () => {
   }
 
   return (
-    <div className="container mx-auto px-20 ">
+    <div className="container mx-auto px-20 my-16">
       <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mb-5">
         {products.length === 0 && (
           <div className="h-[65vh] ">

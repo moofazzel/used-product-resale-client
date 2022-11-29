@@ -10,7 +10,6 @@ import { AuthContext } from "../../context/AuthProvider";
 const MyProducts = () => {
   const { user, loading } = useContext(AuthContext);
 
-
   const [deleteProduct, setDeleteProduct] = useState(null);
 
   const {
@@ -21,19 +20,17 @@ const MyProducts = () => {
     queryKey: ["product", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/myProduct?email=${user?.email}`
+        `https://used-procuct.vercel.app/myProduct?email=${user?.email}`
       );
       const data = await res.json();
       return data;
     },
   });
 
-
   console.log(deleteProduct);
   //  button for delete doctor
   const handleDeleteProduct = (product) => {
-
-    fetch(`http://localhost:5000/product/${product?._id}`, {
+    fetch(`https://used-procuct.vercel.app/product/${product?._id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -43,24 +40,28 @@ const MyProducts = () => {
       .then((data) => {
         if (data.deletedCount) {
           refetch();
-          toast(`Product "${product.modal}" deleted Successfully`,{position:"top-center"});
+          toast(`Product "${product.modal}" deleted Successfully`, {
+            position: "top-center",
+          });
         }
       });
   };
 
   const handleUpdate = (id) => {
-    fetch(`http://localhost:5000/product/advertise/${id}`, {
+    fetch(`https://used-procuct.vercel.app/product/advertise/${id}`, {
       method: "PUT",
       headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`
-      }
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
         if (data?.acknowledged) {
-          toast('Your Product is now in advertising',{position:"top-center"});
+          toast("Your Product is now in advertising", {
+            position: "top-center",
+          });
         }
-        refetch()
+        refetch();
       });
   };
 
@@ -114,7 +115,7 @@ const MyProducts = () => {
                 <div className="text-sm text-gray-900">Title: {p?.brand}</div>
                 <div className="text-sm text-gray-500">Model: {p?.modal}</div>
                 <div className="text-sm text-gray-500">
-                ResellingPrice: {p?.resellingPrice}
+                  ResellingPrice: {p?.resellingPrice}
                 </div>
                 <div className="text-sm text-gray-500">
                   Product ID: {p?._id}
@@ -145,10 +146,20 @@ const MyProducts = () => {
                       </label>
                     </li>
                     <li>
-                      <Link onClick={handleUpdate} className="hover:bg-green-200">Update</Link>
+                      <Link
+                        onClick={handleUpdate}
+                        className="hover:bg-green-200"
+                      >
+                        Update
+                      </Link>
                     </li>
                     <li>
-                      <Link onClick={()=>handleUpdate(p._id)} className="hover:bg-fuchsia-200">Make Add</Link>
+                      <Link
+                        onClick={() => handleUpdate(p._id)}
+                        className="hover:bg-fuchsia-200"
+                      >
+                        Advertise
+                      </Link>
                     </li>
                   </ul>
                 </div>

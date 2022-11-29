@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthProvider";
-import Product from "./Product";
+import React, { useEffect, useState } from "react";
+
 import SingleFeaturedProduct from "./SingleFeaturedProduct";
 
 const FeturedProduct = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/featuredProduct")
+    fetch("https://used-procuct.vercel.app/featuredProduct")
       .then((res) => res.json())
       .then((data) => setFeaturedProducts(data));
   }, []);
@@ -16,9 +14,9 @@ const FeturedProduct = () => {
   return (
     <>
       {featuredProducts.length > 0 && (
-        <div className="container mx-auto px-6 lg:px-20">
+        <div className="container mx-auto px-6 py-10  lg:px-20">
           {/* <!-- title --> */}
-          <div className="p-5">
+          <div className="p-5 text-center">
             <h1 className="font-bold text-4xl mb-4">Featured Products</h1>
             <h3 className="font-semibold text-xl mb-4">
               Get Your Desired Product from Featured Category!

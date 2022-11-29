@@ -44,10 +44,10 @@ const Login = () => {
     googleSignIn()
       .then((result) => {
         const user = result.user;
-      
+
         const accountType = "buyer";
         if (user.uid) {
-          toast("Login Success")
+          toast("Login Success");
           saveUser(user.displayName, user.email, accountType);
         }
         navigate(from, { replace: true });
@@ -62,7 +62,7 @@ const Login = () => {
 
   const saveUser = (name, email, accountType) => {
     const user = { name, email, accountType: accountType };
-    fetch("http://localhost:5000/users", {
+    fetch("https://used-procuct.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -72,7 +72,6 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         // set email for custom hook useToken for check token
-        
       });
   };
 
