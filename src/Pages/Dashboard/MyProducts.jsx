@@ -32,7 +32,7 @@ const MyProducts = () => {
   console.log(deleteProduct);
   //  button for delete doctor
   const handleDeleteProduct = (product) => {
-    console.log(product);
+
     fetch(`http://localhost:5000/product/${product?._id}`, {
       method: "DELETE",
       headers: {
