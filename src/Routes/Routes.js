@@ -14,6 +14,8 @@ import Product from "../Pages/Home/Product";
 import Login from "../Pages/Login";
 import Products from "../Pages/Products/Products";
 import Register from "../Pages/Register";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import AdminRoute from "./AdminRoutes/AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -41,19 +43,31 @@ const router = createBrowserRouter([
         path: "/products/:name",
         loader: ({ params }) =>
           fetch(`https://used-procuct.vercel.app/categories/${params.name}`),
-        element: <Products />,
+        element: (
+          <PrivateRoute>
+            <Products />
+          </PrivateRoute>
+        ),
       },
     ],
   },
 
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         path: "/dashboard/",
-        element: <Board />,
+        element: (
+          <AdminRoute>
+            <Board />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/myOrders",
@@ -69,11 +83,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/allbuyers",
-        element: <Allbuyers />,
+        element: (
+          <AdminRoute>
+            <Allbuyers />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/allSeller",
-        element: <Allseller />,
+        element: (
+          <AdminRoute>
+            <Allseller />
+          </AdminRoute>
+        ),
       },
     ],
   },

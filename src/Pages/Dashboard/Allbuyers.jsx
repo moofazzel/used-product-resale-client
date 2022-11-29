@@ -39,23 +39,6 @@ const Allbuyers = () => {
       });
   };
 
-  const handleVerified = (id) => {
-    console.log(id);
-    fetch(`https://used-procuct.vercel.app/buyer/verify/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.acknowledged) {
-          toast("Verified Confirm", { position: "top-center" });
-        }
-        refetch();
-      });
-  };
-
   if (isLoading) {
     return <LoadingSpinner />;
   }
