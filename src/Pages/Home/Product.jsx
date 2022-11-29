@@ -30,10 +30,27 @@ const Product = ({ product, setProductData }) => {
   const [booking, setBooking] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}&&id=${_id}`)
+    fetch(`http://localhost:5000/orders?email=${user?.email}&id=${_id}`)
       .then((res) => res.json())
-      .then((data) => setBooking(data));
-  }, [_id, user?.email]);
+      .then((data) => {
+        setBooking(data);
+      });
+  }, [user?.email, _id]);
+
+  // access one users
+  const [userType, setUserType] = useState(null);
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`http://localhost:5000/user/${user?.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setUserType(data);
+        });
+    }
+  }, [user?.email]);
+
+  console.log(userType?.accountType);
 
   return (
     <>
@@ -57,9 +74,16 @@ const Product = ({ product, setProductData }) => {
           <p className="text-lg font-bold text-black truncate block capitalize">
             {modal}
           </p>
+          <p className="my-1 mb-2">
+            <b>Description:</b> {description}{" "}
+          </p>
           <div>
-            <p>Location: {location}</p>
-            <p>Uses Duration: {usedDuration} </p>
+            <p className="my-1">
+              <b>Location:</b> {location}
+            </p>
+            <p className="my-1">
+              <b>Uses Duration:</b> {usedDuration}{" "}
+            </p>
           </div>
           <div className="relative flex items-center gap-2">
             <img
@@ -98,33 +122,47 @@ const Product = ({ product, setProductData }) => {
                 $ {buyingPrice}{" "}
               </p>
             </del>
-            <div className="ml-auto">
-              {booking?.booked ? (
-                <>
-                  <button disabled className="btn btn-sm ">
-                    Booked
-                  </button>
-                </>
-              ) : (
-                <>
-                  {/* <button className="btn btn-sm ">Buy Now</button> */}
-                  {/* The button to open modal */}
-                  <label
-                    onClick={() => setProductData(product)}
-                    htmlFor="my-modal"
-                    className="btn"
-                  >
-                    Book Now
-                  </label>
-                  <input
-                    type="checkbox"
-                    id="bookModal"
-                    className="modal-toggle"
-                  />
-                </>
-              )}
-            </div>
+
+            {/* fot buyer  */}
+
+            {userType?.accountType === "buyer" && (
+              <div className="ml-auto">
+                {booking?.booked ? (
+                  <>
+                    <button disabled className="btn btn-sm ">
+                      Booked
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {/* <button className="btn btn-sm ">Buy Now</button> */}
+                    {/* The button to open modal */}
+                    <label
+                      onClick={() => setProductData(product)}
+                      htmlFor="my-modal"
+                      className="btn"
+                    >
+                      Book Now
+                    </label>
+                    <input
+                      type="checkbox"
+                      id="bookModal"
+                      className="modal-toggle"
+                    />
+                  </>
+                )}
+              </div>
+            )}
           </div>
+
+          {/* fot seller */}
+          {userType?.accountType === "seller" && (
+            <>
+              <button disabled className="w-full btn btn-sm text-xs ">
+                For booking Login as Buyer
+              </button>
+            </>
+          )}
         </div>
       </div>
     </>

@@ -10,7 +10,6 @@ import { AuthContext } from "../../context/AuthProvider";
 const MyProducts = () => {
   const { user, loading } = useContext(AuthContext);
 
-  console.log(user?.email);
 
   const [deleteProduct, setDeleteProduct] = useState(null);
 
@@ -44,7 +43,7 @@ const MyProducts = () => {
       .then((data) => {
         if (data.deletedCount) {
           refetch();
-          toast(`Product "${product.modal}" deleted Successfully`);
+          toast(`Product "${product.modal}" deleted Successfully`,{position:"top-center"});
         }
       });
   };
@@ -59,7 +58,7 @@ const MyProducts = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.acknowledged) {
-          toast('Your Product is now in advertising');
+          toast('Your Product is now in advertising',{position:"top-center"});
         }
         refetch()
       });

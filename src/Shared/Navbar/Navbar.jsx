@@ -62,10 +62,13 @@ const Navbar = () => {
                 className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg w-52"
               >
                 <li>
-                  <Link>Item 1</Link>
+                  <Link className="w-full">{user?.displayName} </Link>
                 </li>
                 <li>
-                  <Link onClick={handleLogOut}>Log Out</Link>
+                  <Link className="w-full">{user?.email} </Link>
+                </li>
+                <li>
+                  <Link onClick={handleLogOut} className="w-full">Log Out</Link>
                 </li>
               </ul>
             </div>
