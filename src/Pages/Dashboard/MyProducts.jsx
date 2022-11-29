@@ -29,7 +29,7 @@ const MyProducts = () => {
   });
 
 
-
+  console.log(deleteProduct);
   //  button for delete doctor
   const handleDeleteProduct = (product) => {
     console.log(product);
@@ -159,8 +159,10 @@ const MyProducts = () => {
       </table>
       {deleteProduct && (
         <DeleteConfirmModal
-          handleDeleteProduct={handleDeleteProduct}
-          deleteProduct={deleteProduct}
+          title={"Are you sure you want to delete ?"}
+          message={`If you delete "${deleteProduct.modal}" it won't be recover`}
+          successAction={handleDeleteProduct}
+          modalData={deleteProduct}
         />
       )}
       <ToastContainer />

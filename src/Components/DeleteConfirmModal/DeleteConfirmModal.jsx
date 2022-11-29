@@ -1,30 +1,30 @@
 import React from "react";
 
-const DeleteConfirmModal = ({ deleteProduct, handleDeleteProduct }) => {
+const DeleteConfirmModal = ({ title, message, successAction, modalData }) => {
   return (
     <>
-      {/* Put this part before </body> tag */}
-      <input type="checkbox" id="confirm-delete" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box rounded-md">
-          <h3 className="font-bold text-lg">
-            Are you sure you want to delete ?
-          </h3>
-          <p className="py-4 font-semibold">
-            If you delete{" "}
-            <span className="font-semibold text-red-600">
-              {deleteProduct.brand}, {deleteProduct.modal}{" "}
-            </span>
-            it won't be recover
-          </p>
-          <div className="modal-action">
+      <div>
+        {/* Put this part before </body> tag */}
+        <input type="checkbox" id="confirm-delete" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box rounded-md">
             <label
-              onClick={()=>handleDeleteProduct(deleteProduct)}
               htmlFor="confirm-delete"
-              className="btn btn-sm"
+              className="btn btn-sm btn-circle absolute right-3 top-3"
             >
-              Yes
+              ✕
             </label>
+            <h3 className="font-bold text-lg">{title}</h3>
+            <p className="py-4 ">{message}</p>
+            <div className="modal-action">
+              <label
+                onClick={() => successAction(modalData)}
+                htmlFor="confirm-delete"
+                className="btn"
+              >
+                Yes
+              </label>
+            </div>
           </div>
         </div>
       </div>

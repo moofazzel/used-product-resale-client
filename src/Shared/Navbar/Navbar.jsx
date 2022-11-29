@@ -59,16 +59,16 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg w-52"
+                className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg w-auto"
               >
-                <li>
-                  <Link className="w-full">{user?.displayName} </Link>
+                <li className="">
+                  <Link className="w-full hover:bg-fuchsia-50 cursor-text">{user?.displayName} </Link>
                 </li>
                 <li>
-                  <Link className="w-full">{user?.email} </Link>
+                  <Link className="w-full hover:bg-fuchsia-50 cursor-text">{user?.email} </Link>
                 </li>
-                <li>
-                  <Link onClick={handleLogOut} className="w-full">Log Out</Link>
+                <li className="">
+                  <Link onClick={handleLogOut} className="w-full bg-red-100 hover:bg-red-400">Log Out</Link>
                 </li>
               </ul>
             </div>

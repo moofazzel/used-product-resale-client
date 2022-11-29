@@ -15,7 +15,6 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -30,7 +29,7 @@ const Register = () => {
         UpdateNamePhotoURL(profile);
 
         if (user.uid) {
-          saveUser(data.name, data.email, data.accountType);
+          saveUser(data.name, data.email, data.accountType, data.url);
         }
       })
       .catch((error) => {
@@ -41,8 +40,8 @@ const Register = () => {
   };
 
 
-  const saveUser = (name, email, accountType) => {
-    const user = { name, email, accountType: accountType };
+  const saveUser = (name, email, accountType, img) => {
+    const user = { name, email, accountType: accountType, user_img: img };
     fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
@@ -160,12 +159,6 @@ const Register = () => {
                 >
                   Password
                 </label>
-                <Link
-                  href="#"
-                  className="text-sm text-blue-600 hover:underline focus:text-blue-800"
-                >
-                  Forgot Password?
-                </Link>
               </div>
               <input
                 type="password"
