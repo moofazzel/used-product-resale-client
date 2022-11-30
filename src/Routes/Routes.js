@@ -63,11 +63,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/",
-        element: (
-          <AdminRoute>
-            <Board />
-          </AdminRoute>
-        ),
+        element: <Board />,
       },
       {
         path: "/dashboard/myOrders",
@@ -84,17 +80,13 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/allbuyers",
         element: (
-          <AdminRoute>
             <Allbuyers />
-          </AdminRoute>
         ),
       },
       {
         path: "/dashboard/allSeller",
         element: (
-          <AdminRoute>
             <Allseller />
-          </AdminRoute>
         ),
       },
     ],

@@ -10,50 +10,34 @@ const Blog = () => {
             <div className="space-y-4">
               <details className="w-full border rounded-lg" open="">
                 <summary className="px-4 py-6 focus:outline-none focus-visible:ring-violet-400">
-                  What is cors?
+                What are the different ways to manage a state in a React application?
                 </summary>
                 <p className="px-4 py-6 pt-0 ml-4 -mt-4 dark:text-gray-400">
-                  Cross-origin resource sharing (CROS) is a mechanism that allows
-                  restricted resources on a web page to be requested from another
-                  domain outside the domain from which the first resource was
-                  served. A web page may freely embed cross-origin images,
-                  stylesheets, scripts, iframes, and videos.
+                Local (UI) state – Local state is data we manage in one or another component. Global (UI) state – Global state is data we manage across multiple components. Server state – Data that comes from an external server that must be integrated with our UI state. URL state – Data that exists on our URLs, including the pathname and query parameters.
                 </p>
               </details>
               <details className="w-full border rounded-lg" open="">
                 <summary className="px-4 py-6 focus:outline-none focus-visible:ring-violet-400">
-                  Why are you using firebase? What other options do you have to
-                  implement authentication?
+                How does prototypical inheritance work?
                 </summary>
                 <p className="px-4 py-6 pt-0 ml-4 -mt-4 dark:text-gray-400">
-                  Firebase Authentication provides backend services, easy-to-use
-                  SDKs, and ready-made UI libraries to authenticate users to your
-                  app. It supports authentication using passwords, phone numbers,
-                  popular federated identity providers like Google, Facebook and
-                  Twitter, and more. The best Firebase alternatives are: Auth0,
-                  MongoDB. MongoDB,Passport, Okta, JSON Web Token, Keycloak,
-                  Amazon Cognito.
+                he Prototypal Inheritance is a feature in javascript used to add methods and properties in objects. It is a method by which an object can inherit the properties and methods of another object. Traditionally, in order to get and set the [[Prototype]] of an object, we use Object. getPrototypeOf and Object.
                 </p>
               </details>
               <details className="w-full border rounded-lg" open="">
                 <summary className="px-4 py-6 focus:outline-none focus-visible:ring-violet-400">
-                  How does the private route work?
+                What is a unit test? Why should we write unit tests?
                 </summary>
                 <p className="px-4 py-6 pt-0 ml-4 -mt-4 dark:text-gray-400">
-                  How does the private route work? The private route component is
-                  similar to the public route, the only change is that redirect
-                  URL and authenticate condition. If the user is not authenticated
-                  he will be redirected to the login page and the user can only
-                  access the authenticated routes If he is authenticated (Logged
-                  in).
+                The main objective of unit testing is to isolate written code to test and determine if it works as intended. Unit testing is an important step in the development process, because if done correctly, it can help detect early flaws in code which may be more difficult to find in later testing stages.
                 </p>
               </details>
               <details className="w-full border rounded-lg" open="">
                 <summary className="px-4 py-6 focus:outline-none focus-visible:ring-violet-400">
-                What is Node? How does Node work?
+                React vs. Angular vs. Vue?
                 </summary>
                 <p className="px-4 py-6 pt-0 ml-4 -mt-4 dark:text-gray-400">
-                It is a used as backend service where javascript works on the server-side of the application. This way javascript is used on both frontend and backend. Node. js runs on chrome v8 engine which converts javascript code into machine code, it is highly scalable, lightweight, fast, and data-intensive.
+                Vue provides higher customizability and hence is easier to learn than Angular or React. Further, Vue has an overlap with Angular and React with respect to their functionality like the use of components. Hence, the transition to Vue from either of the two is an easy option.
                 </p>
               </details>
             </div>

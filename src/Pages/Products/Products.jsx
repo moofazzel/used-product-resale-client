@@ -5,12 +5,21 @@ import Product from "../Home/Product";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../../context/AuthProvider";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 const Products = () => {
+
+  const {loading} = useContext(AuthContext)
+
   const [productData, setProductData] = useState(null);
   const [successToast, setSuccessToast] = useState(undefined);
 
   const products = useLoaderData();
+
+  if (loading) {
+    return <LoadingSpinner/>
+  }
 
   if (successToast) {
     return successToast;
