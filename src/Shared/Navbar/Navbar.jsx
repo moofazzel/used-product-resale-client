@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import { BsFillGearFill, BsFillStarFill, BsFillCartFill } from "react-icons/bs";
+import { BiChevronDown, BiSearch } from "react-icons/bi";
 
 const Navbar = () => {
   const [categories, setCategories] = useState([]);
@@ -24,7 +26,16 @@ const Navbar = () => {
   const menuItems = (
     <>
       <>
-        <li>
+        <li className="hover:text-red-500">
+          <Link to={"/"}>Home</Link>
+        </li>
+        <li className="hover:text-red-500">
+          <Link>Features</Link>
+        </li>
+        <li className="hover:text-red-500">
+          <Link>Shop</Link>
+        </li>
+        <li className="hover:text-red-500">
           <Link to={"/blog"}>Blog</Link>
         </li>
         <li className="dropdown dropdown-hover">
@@ -36,123 +47,191 @@ const Navbar = () => {
             className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52"
           >
             {categories.map((c) => (
-              <li key={c._id}>
+              <li className="hover:text-red-500" key={c._id}>
                 <Link to={`/products/${c.category_name}`}>{c.name}</Link>
               </li>
             ))}
           </ul>
         </li>
       </>
-      {user?.uid && (
-        <li>
-          <Link to={"/dashboard"}>Dashboard</Link>
-        </li>
-      )}
+
+      <li className="hover:text-red-500">
+        <Link>Contact</Link>
+      </li>
+      <li className="hover:text-red-500">
+        <Link>Wishlist</Link>
+      </li>
     </>
   );
 
   return (
     <>
-      
-      
+      {/* Top bar */}
+      <div className="container mx-auto pr-2 lg:px-16 my-1">
+        <div className="flex items-center justify-end text-xs gap-6">
+          <div>
+            <Link>TRACK MY ORDERS</Link>
+          </div>
 
-      <div className="shadow-md">
-        <div className="container mx-auto pr-2 lg:px-20">
-          <div className="navbar flex justify-between">
-            <div className="navbar-start">
-              <div className="dropdown">
-                <label
-                  htmlFor="dashboard-drawer"
-                  tabIndex={3}
-                  className="btn btn-ghost lg:hidden"
+          <div className="dropdown dropdown-end">
+            <label
+              tabIndex={0}
+              className=" flex items-center m-1 hover:underline group"
+            >
+              <BsFillGearFill className="  mr-1 group-hover:animate-spin" />
+
+              {user ? (
+                <span className="capitalize">{user.displayName}</span>
+              ) : (
+                <span>My Account</span>
+              )}
+
+              <BiChevronDown className="text-[22px]" />
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg border w-auto"
+            >
+              <li className="">
+                <Link className="w-full hover:bg-fuchsia-50 cursor-text">
+                  {user?.displayName}{" "}
+                </Link>
+              </li>
+              <li>
+                <Link className="w-full hover:bg-fuchsia-50 cursor-text">
+                  {user?.email}{" "}
+                </Link>
+              </li>
+              {user?.uid && (
+                <li>
+                  <Link to={"/dashboard"}>Dashboard</Link>
+                </li>
+              )}
+              <li className="">
+                <Link
+                  onClick={handleLogOut}
+                  className="w-full bg-red-100 hover:bg-red-400"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h8m-8 6h16"
-                    />
-                  </svg>
-                </label>
-              </div>
-              <Link
-                to={"/"}
-                className="font-bold text-xl md:text-3xl normal-case"
+                  Log Out
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      {/* Top bar End */}
+
+      {/* Navbar middle */}
+      <div className="container mx-auto pr-2 lg:px-20 mb-5">
+        <div className="navbar flex justify-between">
+          <div>
+            <div className="dropdown">
+              <label
+                htmlFor="dashboard-drawer"
+                tabIndex={3}
+                className="btn btn-ghost lg:hidden"
               >
-                Vendor
-              </Link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </label>
             </div>
-            <div>
-              <div className="navbar-center hidden lg:flex ">
-                <ul className="menu menu-horizontal p-0">{menuItems}</ul>
+            <Link
+              to={"/"}
+              className="text-red-500 text-xl md:text-3xl normal-case font-bold"
+            >
+              Vendor
+            </Link>
+          </div>
+
+          <form>
+            <div class="flex pl-3 lg:ml-28 items-center border border-red-400 rounded-full">
+              <div className="dropdown border-r-[1px]">
+                <label
+                  tabIndex={0}
+                  className="flex items-center m-2 text-[13px] "
+                >
+                  All Categories
+                  <BiChevronDown className="text-[16px] ml-3" />
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-sm w-52"
+                >
+                  <li>
+                    <a>Item 1</a>
+                  </li>
+                  <li>
+                    <a>Item 2</a>
+                  </li>
+                </ul>
               </div>
-              <div className="flex items-center gap-2 ml-2">
-                {user?.uid ? (
-                  <>
-                    <div className="dropdown dropdown-hover dropdown-end rounded-md ">
-                      <label tabIndex={0} className=" m-1">
-                        <div className="avatar online">
-                          <div className="w-14 rounded-full">
-                            <img src={user?.photoURL} alt="" />
-                          </div>
-                        </div>
-                      </label>
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg border w-auto"
-                      >
-                        <li className="">
-                          <Link className="w-full hover:bg-fuchsia-50 cursor-text">
-                            {user?.displayName}{" "}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link className="w-full hover:bg-fuchsia-50 cursor-text">
-                            {user?.email}{" "}
-                          </Link>
-                        </li>
-                        <li className="">
-                          <Link
-                            onClick={handleLogOut}
-                            className="w-full bg-red-100 hover:bg-red-400"
-                          >
-                            Log Out
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <Link to={"/login"} className="leading-tight">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                        />
-                      </svg>
-                    </Link>
-                  </>
-                )}
+
+              <div className="flex items-center">
+                <input
+                  className="input placeholder:text-[13px] focus:outline-none"
+                  type="search"
+                  placeholder="Search product..."
+                />
+                {/* <BiSearch className="text-[25px] "/> */}
+                <button className="btn rounded-l-none rounded-r-full border-red-500 bg-red-500">
+                  <BiSearch className="text-[22px] " />
+                </button>
               </div>
+            </div>
+          </form>
+
+          <div>
+            <span className="text-red-500 border-2 border-red-500 p-3 rounded-full">
+              <BsFillStarFill />
+            </span>
+
+            <div className="dropdown dropdown-hover">
+              <label
+                tabIndex={0}
+                className="flex items-center m-2 text-[13px] "
+              >
+                <span className="relative text-red-500 border-2 border-red-500 p-3 rounded-full ml-4">
+                  <BsFillCartFill />
+                  <span className="absolute -top-2 -right-[10px] w-6 h-6 inline-block bg-red-500 rounded-full text-white text-center leading-6">
+                    0
+                  </span>
+                </span>
+
+                <span className="flex items-center text-[16px] font-semibold ml-3">
+                  $0.00
+                  <BiChevronDown />
+                </span>
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-sm  w-72 px-8 py-5"
+              >
+                <li> No products in the cart.</li>
+              </ul>
             </div>
           </div>
         </div>
+      </div>
+      {/* Navbar middle End */}
+
+      <div className="container mx-auto pr-2 lg:px-20 hidden lg:flex ">
+        <ul className="menu menu-horizontal text-white w-full bg-[#363f4d] rounded-t-3xl px-5 uppercase font-semibold text-sm">
+          {menuItems}
+        </ul>
       </div>
     </>
   );
