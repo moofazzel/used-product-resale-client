@@ -107,7 +107,7 @@ const Register = () => {
                 {...register("name", { required: true })}
               />
               {errors.name && (
-                <span className="text-red-500">Name is required</span>
+                <span className="text-[#eb3e32]">Name is required</span>
               )}
             </div>
 
@@ -127,7 +127,7 @@ const Register = () => {
                 {...register("url", { required: true })}
               />
               {errors.url && (
-                <span className="text-red-500">Photo Url is required</span>
+                <span className="text-[#eb3e32]">Photo Url is required</span>
               )}
             </div>
 
@@ -147,7 +147,7 @@ const Register = () => {
                 {...register("email", { required: true })}
               />
               {errors.email && (
-                <span className="text-red-500">Email is required</span>
+                <span className="text-[#eb3e32]">Email is required</span>
               )}
             </div>
             <div className="flex flex-col space-y-1">
@@ -166,7 +166,7 @@ const Register = () => {
                 {...register("password", { required: true })}
               />
               {errors.password && (
-                <span className="text-red-500">Password is required</span>
+                <span className="text-[#eb3e32]">Password is required</span>
               )}
             </div>
 
@@ -178,7 +178,7 @@ const Register = () => {
               <option value="buyer">Buyer</option>
             </select>
             {errors.name && (
-              <span className="text-red-500">Account type is required</span>
+              <span className="text-[#eb3e32]">Account type is required</span>
             )}
             <div>
               <button
