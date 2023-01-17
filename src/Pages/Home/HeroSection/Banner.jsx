@@ -18,7 +18,7 @@ const Banner = () => {
 
   return (
     <div className="container mx-auto lg:px-20">
-      <div className="lg:flex gap-8 justify-center items-center">
+      <div className="lg:flex gap-8 items-center">
         <div className="lg:w-[20%] self-start">
           <div className=" w-full">
             <div
@@ -78,10 +78,10 @@ const Banner = () => {
         </div>
 
         <div
-          className="md:h-[30rem] pl-5 md:pl-20 lg:w-[80%] !bg-top xl:bg-[0%]"
+          className=" pl-5 md:pl-20 lg:w-[80%] !bg-top xl:bg-[0%] pb-10"
           style={{
             background: `url(${b_1_1}) no-repeat center`,
-            backgroundSize: "contain",
+            backgroundSize: "cover",
           }}
         >
           <div>
