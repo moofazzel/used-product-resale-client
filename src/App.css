@@ -14,8 +14,9 @@
 }
 
 .four_zero_four_bg {
-  background: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif) no-repeat center;
-  background-position:  center;
+  background: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)
+    no-repeat center;
+  background-position: center;
   height: 400px;
   background-position: center;
 }
@@ -75,5 +76,42 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.swiper.swiper-initialized.swiper-horizontal.swiper-pointer-events {
+  position: inherit;
+}
+
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+  /* right: 6px; */
+  left: 100px;
+  top: 41px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--swiper-navigation-color, var(--swiper-theme-color));
+}
+
+@media screen and (min-width: 576px) {
+  .swiper-container {
+    width: 576px;
+  }
+}
+
+@media (min-width: 992px) {
+  .swiper .swiper-slide {
   }
 }

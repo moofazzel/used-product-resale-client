@@ -139,7 +139,7 @@ const Navbar = () => {
           </div>
 
           <form className="w-full lg:w-fit">
-            <div class="flex w-full lg:w-fit pl-3 xl:ml-28 items-center border border-red-400 rounded-full">
+            <div className="flex w-full lg:w-fit pl-3 xl:ml-28 items-center border border-red-400 rounded-full">
               <div className="dropdown border-r-[1px] hidden md:block">
                 <label className="flex items-center m-2 text-[13px] ">
                   All&#160;Categories
@@ -203,7 +203,7 @@ const Navbar = () => {
       </div>
       {/* Navbar middle End */}
 
-      <div className="container mx-auto lg:px-20 hidden lg:flex mt-5">
+      <div className="container mx-auto lg:px-14 hidden lg:flex mt-5">
         <ul className="uppercase font-semibold text-sm menu menu-horizontal text-white w-full bg-[#363f4d] rounded-t-3xl px-5 ">
           {menuItems}
         </ul>
@@ -212,7 +212,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {/* TODO: mobile menu add icoon to mobile menu */}
 
-      <div className="container mx-auto lg:px-20 lg:hidden">
+      <div className="container mx-auto lg:px-14 lg:hidden">
         <ul className="uppercase font-semibold text-sm menu menu-horizontal text-white w-full bg-[#363f4d] rounded-t-3xl px-5 ">
           <li className="lg:hidden w-full">
             <span>Menu</span>
