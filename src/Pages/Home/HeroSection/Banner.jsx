@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import b_1_1 from "../../../assets/images/b_1_1.jpg";
-
-import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import { motion } from "framer-motion";
+import { GiHamburgerMenu } from "react-icons/gi";
+
+import b_1_1 from "../../../assets/images/b_1_1.jpg";
+import b_2_1 from "../../../assets/images/b_2_1.jpg";
+import Services from "../Services";
 
 const Banner = () => {
   // Load categories
@@ -16,6 +20,52 @@ const Banner = () => {
       .then((data) => setCategories(data));
   }, []);
 
+  const bannerData = [
+    {
+      titleBrand: "Samsung Gear VR",
+      title: "Sale 70% Off",
+      subtitle: "Exclusive Offer -20% Off This Week",
+      price: "56.99",
+      titleColor: "text-[#000000]",
+      subTitleColor: "text-[#eb3e32]",
+      priceColor: "text-[#000000]",
+      image: b_1_1,
+    },
+    {
+      titleBrand: "Samsung",
+      title: "Galaxy Note 3",
+      subtitle: "Exclusive Offer -20% Off This Week",
+      price: "566.99",
+      image: b_2_1,
+      titleColor: "text-[#ffffff]",
+      subTitleColor: "text-[#ffffff]",
+      priceColor: "text-[#ffea00]",
+    },
+  ];
+
+  var settings = {
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 0,
+  };
+
+  const subTitleMotion = {
+    hidden: { opacity: 1, scale: 0, x: -800 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      x: 0,
+      transition: {
+        delay: 2,
+      },
+    },
+  };
+
   return (
     <section className="bg-[#f3f3f3] py-10 px-4 lg:px-0">
       <div className="container mx-auto lg:px-16">
@@ -24,7 +74,7 @@ const Banner = () => {
             <div className="w-full">
               <div
                 onClick={() => setOpen(!open)}
-                className=" flex gap-3 items-center bg-[#eb3e32] text-white  px-4 py-2 cursor-pointer"
+                className=" flex gap-3 items-center bg-[#eb3e32] rounded-t text-white  px-4 py-2 cursor-pointer"
               >
                 <GiHamburgerMenu className="text-xl" /> Categories
               </div>
@@ -78,35 +128,48 @@ const Banner = () => {
             </div>
           </div>
 
-          <div
-            className="w-full pl-5 md:pl-20 lg:w-[80%] !bg-top xl:bg-[0%] pb-20"
-            style={{
-              background: `url(${b_1_1}) no-repeat center`,
-              backgroundSize: "cover",
-            }}
-          >
-            <div>
-              <h4 className="text-xs text-[#eb3e32] pt-10 md:pt-[110px]">
-                Exclusive Offer -20% Off This Week{" "}
-              </h4>
-              <h1 className="text-2xl md:text-4xl font-bold mb-4">
-                Samsung Gear Vr <br /> Sale 70% Off
-              </h1>
-              <p className="text-[11px] mb-5">
-                Starting at
-                <span className="text-lg md:text-2xl text-red-600 font-semibold ml-1">
-                  $560.99
-                </span>
-              </p>
-            </div>
+          <div className="lg:w-[calc(100%-280px)]">
+            <Slider {...settings}>
+              {bannerData.map((b, i) => (
+                <div key={i} className="relative">
+                  <img src={b.image} alt="" />
+                  <div className="absolute top-10 md:top-[140px] left-16 ">
+                    <div className="">
+                      <motion.h4
+                        variants={subTitleMotion}
+                        initial="hidden"
+                        animate="visible"
+                        className={`text-xs ${b.subTitleColor} mb-3`}
+                      >
+                        {b.subtitle}
+                      </motion.h4>
+                      <h1
+                        className={`text-2xl md:text-4xl font-bold mb-4 ${b.titleColor}`}
+                      >
+                        {b.titleBrand} <br /> {b.title}
+                      </h1>
+                      <p className={`text-[11px] mb-5 ${b.titleColor}`}>
+                        Starting at
+                        <span
+                          className={`text-lg md:text-2xl text-red-600 font-semibold ml-1 ${b.priceColor}`}
+                        >
+                          ${b.price}
+                        </span>
+                      </p>
+                    </div>
 
-            <div>
-              <button className="text-xs bg-[#eb3e32] text-white px-6 py-2 rounded-[3px]  uppercase hover:bg-slate-700">
-                Shopping now
-              </button>
-            </div>
+                    <div>
+                      <button className="text-xs bg-[#eb3e32] text-white px-6 py-2 rounded-[3px]  uppercase hover:bg-slate-700">
+                        Shopping now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
           </div>
         </div>
+        <Services />
       </div>
     </section>
   );

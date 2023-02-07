@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { BsFillGearFill, BsFillStarFill, BsFillCartFill } from "react-icons/bs";
 import { BiChevronDown, BiSearch } from "react-icons/bi";
+import Alert from "../../Components/Alert";
 
 const Navbar = () => {
   const [categories, setCategories] = useState([]);
@@ -68,6 +69,8 @@ const Navbar = () => {
 
   return (
     <div className="px-4 lg:px-0">
+      {/* TODO alert */}
+      <Alert />
       {/* Top bar */}
       <div className="container mx-auto pr-2 lg:px-16 mt-1 my-[6px] ">
         <div className="flex items-center justify-end text-xs gap-6">
@@ -92,31 +95,41 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg border w-auto"
+              className="dropdown-content menu p-2 bg-fuchsia-50 rounded-md shadow-lg border md:w-56"
             >
-              <li className="">
-                <Link className="w-full hover:bg-fuchsia-50 cursor-text">
-                  {user?.displayName}{" "}
-                </Link>
-              </li>
-              <li>
-                <Link className="w-full hover:bg-fuchsia-50 cursor-text">
-                  {user?.email}{" "}
-                </Link>
-              </li>
-              {user?.uid && (
-                <li>
-                  <Link to={"/dashboard"}>Dashboard</Link>
-                </li>
+              {user ? (
+                <>
+                  <li className="">
+                    <Link className="w-full hover:bg-fuchsia-50 cursor-text">
+                      {user?.displayName}{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="w-full hover:bg-fuchsia-50 cursor-text">
+                      {user?.email}{" "}
+                    </Link>
+                  </li>
+                  {user?.uid && (
+                    <li>
+                      <Link to={"/dashboard"}>Dashboard</Link>
+                    </li>
+                  )}
+                  <li className="">
+                    <Link
+                      onClick={handleLogOut}
+                      className="w-full bg-red-100 hover:bg-red-400"
+                    >
+                      Log Out
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to={"/login"}>Login or Register </Link>
+                  </li>
+                </>
               )}
-              <li className="">
-                <Link
-                  onClick={handleLogOut}
-                  className="w-full bg-red-100 hover:bg-red-400"
-                >
-                  Log Out
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

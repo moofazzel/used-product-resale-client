@@ -79,15 +79,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/allbuyers",
-        element: (
-            <Allbuyers />
-        ),
+        element: <Allbuyers />,
       },
       {
         path: "/dashboard/allSeller",
-        element: (
-            <Allseller />
-        ),
+        element: <Allseller />,
       },
     ],
   },

@@ -1,22 +1,53 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { RxDividerVertical } from "react-icons/rx";
 import { AiFillStar } from "react-icons/ai";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Navigation, Pagination, Scrollbar } from "swiper";
+import Slider from "react-slick";
 
 import "./DesktopAndTelevision";
 
 const HotDeals = () => {
-  const [swiperRef, setSwiperRef] = useState(null);
+  const sliderRef = useRef(null);
 
-  const prevHandler = () => {
-    swiperRef.slidePrev();
-  };
-
-  const nextHandler = () => {
-    swiperRef.slideNext();
+  var settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 2,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1300,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const hotDeals = [
@@ -42,49 +73,29 @@ const HotDeals = () => {
 
   return (
     <>
-      <div className="relative lg:w-[300px] border">
-        <div className="bg-[#eb3e32] flex items-center justify-between px-4 py-3 -z-10">
+      <div className="relative lg:w-[250px] border rounded-b">
+        <div className="bg-[#eb3e32] rounded-t flex items-center justify-between px-4 py-3 -z-10">
           <h3 className=" text-white font-semibold rounded-sm">Hot deals</h3>
           <div className="flex items-center">
             <AiOutlineLeft
-              onClick={prevHandler}
+              onClick={() => sliderRef.current.slickPrev()}
               className=" text-slate-300 hover:text-white transition-all hover:cursor-pointer duration-300"
             />
 
             <RxDividerVertical className="text-white" />
 
             <AiOutlineRight
-              onClick={nextHandler}
+              onClick={() => sliderRef.current.slickNext()}
               className="text-slate-300 hover:text-white transition-all hover:cursor-pointer duration-300"
             />
           </div>
         </div>
 
-        <Swiper
-          breakpoints={{
-            // when window width is >= 425px
-            600: {
-              width: 425,
-              slidesPerView: 1,
-            },
-            // when window width is >= 768px
-            768: {
-              width: 768,
-              slidesPerView: 2,
-            },
-          }}
-          // install Swiper modules
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
-          loop={true}
-          spaceBetween={50}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          onSwiper={(swiper) => setSwiperRef(swiper)}
-        >
+        <Slider ref={sliderRef} {...settings}>
           {hotDeals.map((hotdeal, i) => (
-            <SwiperSlide key={i}>
-              <div className="lg:w-[300px] md:border-2 lg:border-0 mb-">
-                <img width="300" height="300" src={hotdeal.img} alt="#" />
+            <div key={i}>
+              <div className="border-r my-10">
+                <img src={hotdeal.img} alt="#" />
                 <div className="flex flex-col items-center gap-3">
                   <h3> {hotdeal.title} </h3>
                   <span className="flex  items-center text-yellow-500">
@@ -99,9 +110,9 @@ const HotDeals = () => {
                   </span>
                 </div>
               </div>
-            </SwiperSlide>
+            </div>
           ))}
-        </Swiper>
+        </Slider>
       </div>
     </>
   );
