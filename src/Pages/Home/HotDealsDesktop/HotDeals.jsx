@@ -12,24 +12,27 @@ const HotDeals = () => {
   var settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 2,
+    slidesToShow: 2,
+    slidesToScroll: 1,
     initialSlide: 0,
+    vertical: true,
+    verticalSwiping: true,
     responsive: [
-      {
-        breakpoint: 1300,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-        },
-      },
+      // {
+      //   breakpoint: 1300,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1,
+      //     infinite: true,
+      //   },
+      // },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
+          vertical: false,
         },
       },
       {
@@ -38,12 +41,14 @@ const HotDeals = () => {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
+          vertical: false,
         },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
+          vertical: false,
           slidesToScroll: 1,
         },
       },
@@ -81,9 +86,7 @@ const HotDeals = () => {
               onClick={() => sliderRef.current.slickPrev()}
               className=" text-slate-300 hover:text-white transition-all hover:cursor-pointer duration-300"
             />
-
             <RxDividerVertical className="text-white" />
-
             <AiOutlineRight
               onClick={() => sliderRef.current.slickNext()}
               className="text-slate-300 hover:text-white transition-all hover:cursor-pointer duration-300"
@@ -93,8 +96,8 @@ const HotDeals = () => {
 
         <Slider ref={sliderRef} {...settings}>
           {hotDeals.map((hotdeal, i) => (
-            <div key={i}>
-              <div className="border-r my-10">
+            <div className="border-b-2 pb-4 mt-[1px] " key={i}>
+              <div className="border-r lg:border-r-0 my-10 mb-2">
                 <img src={hotdeal.img} alt="#" />
                 <div className="flex flex-col items-center gap-3">
                   <h3> {hotdeal.title} </h3>
@@ -110,6 +113,7 @@ const HotDeals = () => {
                   </span>
                 </div>
               </div>
+              {/* <hr className="lg:block last:hidden bg-slate-100 h-[3px] mx-1" /> */}
             </div>
           ))}
         </Slider>
