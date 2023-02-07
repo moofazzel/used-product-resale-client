@@ -86,7 +86,7 @@ const DesktopAndTelevision = () => {
   };
   return (
     <>
-      <div className="relative lg:w-[calc(100%-285px)]">
+      <div>
         <div className="md:flex items-center justify-between md:border-b-2 border-b-[#eb3e32] mt-8 lg:mt-0">
           <div className="border-b-2 border-b-[#eb3e32] mb-6 md:mb-0">
             <h2 className="bg-[#eb3e32] text-white rounded-t px-4 py-3 -mb-[1px] inline-block">

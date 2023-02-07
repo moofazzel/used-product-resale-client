@@ -31,7 +31,6 @@ const Services = () => {
     <div className="bg-white px-10 py-7 rounded-[2px]">
       <div className="grid justify-center grid-cols-1 lg:grid-cols-4">
         {services.map((serv, i) => {
-          console.log(serv);
           return (
             <div
               key={i}

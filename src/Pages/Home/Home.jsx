@@ -14,7 +14,6 @@ const Home = () => {
       <FeturedProduct />
       <FeatruedCategories />
       <NewArrivals />
-      <Services />
     </div>
   );
 };
